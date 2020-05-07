@@ -1,20 +1,6 @@
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
 
 include(FetchContent)
-
-
-# ------------------------------------------------------------------------------
-# Macro to use the FetchContent_MakeAvailable command in version below 3.14
-#
-if(${CMAKE_VERSION} VERSION_LESS 3.14)
-    macro(FetchContent_MakeAvailable NAME)
-        FetchContent_GetProperties(${NAME})
-        if(NOT ${NAME}_POPULATED)
-            FetchContent_Populate(${NAME})
-            add_subdirectory(${${NAME}_SOURCE_DIR} ${${NAME}_BINARY_DIR})
-        endif()
-    endmacro()
-endif()
 
 # ------------------------------------------------------------------------------
 # Trompeloeil

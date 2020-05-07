@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOUIC ON)
@@ -6,7 +6,6 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
-find_package(cpprestsdk REQUIRED)
 find_package(Boost COMPONENTS thread system chrono REQUIRED)
 
 set(SOURCEFILES
@@ -56,5 +55,5 @@ add_executable(getit
 
 # Libraries
 target_link_libraries(getit Qt5::Widgets)
-target_link_libraries(getit cpprestsdk::cpprest)
+target_link_libraries(getit cpprest)
 target_link_libraries(getit Boost::thread Boost::system Boost::chrono)
