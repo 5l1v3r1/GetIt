@@ -27,13 +27,3 @@ $ ./bin/getit_tests
 #### cpprestsdk
 
 GetIt makes use of the [Microsoft CPP Rest SDK](https://github.com/Microsoft/cpprestsdk) library. Please checkout the documentation to see how you can [install](https://github.com/Microsoft/cpprestsdk#getting-started) this on your computer.
-
-#### OpenSSL
-
-The Microsoft CPP Rest SDK uses the OpenSSL package.
-
-#### Boost packages
-
-  - thread
-  - system
-  - chrono

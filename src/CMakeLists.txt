@@ -58,5 +58,4 @@ add_executable(getit
 
 # Libraries
 target_link_libraries(getit Qt5::Widgets)
-target_link_libraries(getit cpprestsdk::cpprest)
-target_link_libraries(getit Boost::thread Boost::system Boost::chrono)
+target_link_libraries(getit cpprestsdk::cpprest cpprestsdk::cpprestsdk_zlib_internal cpprestsdk::cpprestsdk_boost_internal cpprestsdk::cpprestsdk_openssl_internal)

@@ -25,7 +25,6 @@ include_directories(../src)
 
 # Libraries
 target_link_libraries(getit_tests trompeloeil Catch2::Catch2)
-target_link_libraries(getit_tests cpprestsdk::cpprest)
-target_link_libraries(getit_tests Boost::thread Boost::system Boost::chrono)
+target_link_libraries(getit_tests cpprestsdk::cpprest cpprestsdk::cpprestsdk_zlib_internal cpprestsdk::cpprestsdk_boost_internal cpprestsdk::cpprestsdk_openssl_internal)
 
 add_test(NAME getit_tests  COMMAND getit_tests)

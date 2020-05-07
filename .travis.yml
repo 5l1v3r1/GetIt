@@ -1,104 +1,101 @@
 language: cpp
 
 stages:
-    - build
-    - test
+  - build
+  - test
 
 addons:
-    apt:
-        update: true
-        packages:
-            - libcpprest-dev
-            - qt5-default
-            - libboost-all-dev
+  apt:
+    update: true
+    packages:
+      - libcpprest-dev
+      - qt5-default
 
-    homebrew:
-        update: true
-        packages:
-            - openssl
-            - cpprestsdk
-            - qt5
-            - boost
+  homebrew:
+    update: true
+    packages:
+      - cpprestsdk
+      - qt5
 
 jobs:
-    include:
+  include:
 
-        ###############################
-        ##            TEST
-        ###############################
+    ###############################
+    ##            TEST
+    ###############################
 
-        - stage: test
-          os: linux
-          compiler: gcc
-          install: &install_linux
-              - wget https://github.com/Kitware/CMake/releases/download/v3.15.7/cmake-3.15.7-Linux-x86_64.tar.gz
-              - tar -xf cmake-3.15.7-Linux-x86_64.tar.gz
-              - export PATH=`pwd`/cmake-3.15.7-Linux-x86_64/bin:$PATH
-          before_script: &before_script
-              - cd build
-          script: &script_linux_test
-              - cmake ..
-              - make getit_tests
-              - ./bin/getit_tests
+    - stage: test
+      os: linux
+      compiler: gcc
+      install: &install_linux
+        - wget https://github.com/Kitware/CMake/releases/download/v3.15.7/cmake-3.15.7-Linux-x86_64.tar.gz
+        - tar -xf cmake-3.15.7-Linux-x86_64.tar.gz
+        - export PATH=`pwd`/cmake-3.15.7-Linux-x86_64/bin:$PATH
+      before_script: &before_script
+        - cd build
+      script: &script_linux_test
+        - cmake ..
+        - make getit_tests
+        - ./bin/getit_tests
 
-        - stage: test
-          os: linux
-          compiler: clang
-          install: *install_linux
-          before_script: *before_script
-          script: *script_linux_test
+    - stage: test
+      os: linux
+      compiler: clang
+      install: *install_linux
+      before_script: *before_script
+      script: *script_linux_test
 
-        - stage: test
-          os: osx
-          compiler: gcc
-          install: &install_macos
-              - wget https://github.com/Kitware/CMake/releases/download/v3.15.7/cmake-3.15.7-Darwin-x86_64.tar.gz
-              - tar -xf cmake-3.15.7-Darwin-x86_64.tar.gz
-              - export PATH=`pwd`/cmake-3.15.7-Darwin-x86_64/bin:$PATH
-          before_script: *before_script
-          script: &script_macos_test
-              - cmake .. -DCMAKE_PREFIX_PATH=/usr/local/Cellar/qt/5.14.1
-              - make getit_tests
-              - ./bin/getit_tests
+    - stage: test
+      os: osx
+      compiler: gcc
+      install: &install_macos
+        - wget https://github.com/Kitware/CMake/releases/download/v3.15.7/cmake-3.15.7-Darwin-x86_64.tar.gz
+        - tar -xf cmake-3.15.7-Darwin-x86_64.tar.gz
+        - export PATH=`pwd`/cmake-3.15.7-Darwin-x86_64/bin:$PATH
+      before_script: *before_script
+      script: &script_macos_test
+        - cmake .. -DCMAKE_PREFIX_PATH=/usr/local/Cellar/qt/5.14.1
+        - make getit_tests
+        - ./bin/getit_tests
 
-        - stage: test
-          os: osx
-          compiler: clang
-          install: *install_macos
-          before_script: *before_script
-          script: *script_macos_test
+    - stage: test
+      os: osx
+      compiler: clang
+      install: *install_macos
+      before_script: *before_script
+      script: *script_macos_test
 
-        ###############################
-        ##            BUILD
-        ###############################
-        - stage: build
-          os: linux
-          compiler: gcc
-          install: *install_linux
-          before_script: *before_script
-          script: &script_linux_build
-              - cmake ..
-              - make getit
+    ###############################
+    ##            BUILD
+    ###############################
+    - stage: build
+      os: linux
+      compiler: gcc
+      install: *install_linux
+      before_script: *before_script
+      script: &script_linux_build
+        - cmake ..
+        - make getit
 
-        - stage: build
-          os: linux
-          compiler: clang
-          install: *install_linux
-          before_script: *before_script
-          script: *script_linux_build
+    - stage: build
+      os: linux
+      compiler: clang
+      install: *install_linux
+      before_script: *before_script
+      script: *script_linux_build
 
-        - stage: build
-          os: osx
-          compiler: gcc
-          install: *install_macos
-          before_script: *before_script
-          script: &script_macos_build
-              - cmake .. -DCMAKE_PREFIX_PATH=/usr/local/Cellar/qt/5.14.1
-              - make getit
+    - stage: build
+      os: osx
+      compiler: gcc
+      install: *install_macos
+      before_script: *before_script
+      script: &script_macos_build
+        - cmake .. -DCMAKE_PREFIX_PATH=/usr/local/Cellar/qt/5.14.1
+        - make getit
 
-        - stage: build
-          os: osx
-          compiler: clang
-          install: *install_macos
-          before_script: *before_script
-          script: *script_macos_build
+    - stage: build
+      os: osx
+      compiler: clang
+      install: *install_macos
+      before_script: *before_script
+      script: *script_macos_build
