@@ -10,7 +10,7 @@ namespace getit::domain
     class RequestFactory
     {
         public:
-            RequestFactory(std::string requestType);
+            explicit RequestFactory(std::string requestType);
             ~RequestFactory();
 
             Request* getRequest(std::string method, std::string uri);

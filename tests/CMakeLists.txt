@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
 
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
+find_package(cpprestsdk REQUIRED)
 find_package(Boost COMPONENTS thread system chrono REQUIRED)
 
 set(SRCFILES
@@ -24,7 +25,7 @@ include_directories(../src)
 
 # Libraries
 target_link_libraries(getit_tests trompeloeil Catch2::Catch2)
-target_link_libraries(getit_tests cpprest)
+target_link_libraries(getit_tests cpprestsdk::cpprest)
 target_link_libraries(getit_tests Boost::thread Boost::system Boost::chrono)
 
 add_test(NAME getit_tests  COMMAND getit_tests)

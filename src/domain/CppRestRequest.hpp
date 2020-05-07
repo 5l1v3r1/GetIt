@@ -12,7 +12,7 @@ namespace getit::domain
         public:
             CppRestRequest(std::string method, std::string uri);
             CppRestRequest(std::string method, std::string uri, web::http::client::http_client client);
-            ~CppRestRequest();
+            ~CppRestRequest() override;
 
             void send(std::function<void(Response* response)> callback) override;
 

@@ -9,9 +9,9 @@ namespace getit::domain
     class RawRequestBody: public RequestBody
     {
         public:
-            RawRequestBody(std::string contentType);
+            explicit RawRequestBody(std::string contentType);
             RawRequestBody();
-            ~RawRequestBody();
+            ~RawRequestBody() override;
 
             void setContentType(std::string contentType);
             void setBody(std::string body);

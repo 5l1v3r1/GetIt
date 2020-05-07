@@ -12,8 +12,8 @@ namespace getit::domain
     class FormdataRequestBody: public RequestBody
     {
         public:
-            FormdataRequestBody(std::string boundary);
-            ~FormdataRequestBody();
+            explicit FormdataRequestBody(std::string boundary);
+            ~FormdataRequestBody() override;
 
             void addElement(std::string key, std::string value);
             void addFile(std::string key, std::string filePath);

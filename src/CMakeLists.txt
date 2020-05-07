@@ -6,6 +6,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
+find_package(cpprestsdk REQUIRED)
 find_package(Boost COMPONENTS thread system chrono REQUIRED)
 
 set(SOURCEFILES
@@ -55,5 +56,5 @@ add_executable(getit
 
 # Libraries
 target_link_libraries(getit Qt5::Widgets)
-target_link_libraries(getit cpprest)
+target_link_libraries(getit cpprestsdk::cpprest)
 target_link_libraries(getit Boost::thread Boost::system Boost::chrono)
