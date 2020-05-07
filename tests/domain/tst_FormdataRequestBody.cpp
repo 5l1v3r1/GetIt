@@ -27,8 +27,8 @@ SCENARIO("Newly constructed FormdataRequestBody", "FormdataRequestBody")
     WHEN("A value is added to the body")
     {
         auto requestBody = new getit::domain::FormdataRequestBody(boundary);
-        std::string key = "MyBodyKey";
-        std::string value = "This&is=My+Body@";
+        const std::string& key = "MyBodyKey";
+        const std::string& value = "This&is=My+Body@";
     
         auto expectedOutput = boost::format(
             "--%1%\r\nContent-Disposition: form-data; name=\"%2%\"\r\n\r\n%3%\r\n\r\n--%1%--\r\n"
@@ -38,7 +38,7 @@ SCENARIO("Newly constructed FormdataRequestBody", "FormdataRequestBody")
 
         THEN("the body should include the value")
         {
-            std::string result = requestBody->getBody();
+            const std::string& result = requestBody->getBody();
 
             REQUIRE(result == expectedOutput.str());
         }
@@ -47,8 +47,8 @@ SCENARIO("Newly constructed FormdataRequestBody", "FormdataRequestBody")
     WHEN("A non-existing file is added to the body")
     {
         auto requestBody = new getit::domain::FormdataRequestBody(boundary);
-        std::string key = "MyFile";
-        std::string filePath = "../non-existing-file.non_existing_ext";
+        const std::string& key = "MyFile";
+        const std::string& filePath = "../non-existing-file.non_existing_ext";
 
         auto expectedOutput = boost::format(
             "--%1%\r\nContent-Disposition: form-data; name=\"%2%\"; filename=\"%3%\"\r\n\r\n\r\n\r\n--%1%--\r\n"
@@ -58,14 +58,14 @@ SCENARIO("Newly constructed FormdataRequestBody", "FormdataRequestBody")
 
         THEN("the body should include the file without any data")
         {
-            std::string result = requestBody->getBody();
+            const std::string& result = requestBody->getBody();
 
             REQUIRE(result == expectedOutput.str());
         }
 
         THEN("the size of the body should be the same as the size of the expected body")
         {
-            size_t result = requestBody->getSize();
+            const size_t result = requestBody->getSize();
 
             REQUIRE(result == expectedOutput.str().size());
         }
@@ -74,8 +74,8 @@ SCENARIO("Newly constructed FormdataRequestBody", "FormdataRequestBody")
     WHEN("An existing file is added to the body")
     {
         auto requestBody = new getit::domain::FormdataRequestBody(boundary);
-        std::string key = "MyFile";
-        std::string filePath = "./tst_file.txt";
+        const std::string& key = "MyFile";
+        const std::string& filePath = "./tst_file.txt";
 
         auto expectedOutput = boost::format(
             "--%1%\r\nContent-Disposition: form-data; name=\"%2%\"; filename=\"%3%\"\r\n\r\ncontent\r\n\r\n--%1%--\r\n"
@@ -85,7 +85,7 @@ SCENARIO("Newly constructed FormdataRequestBody", "FormdataRequestBody")
 
         THEN("the body should include the file with it's contents")
         {
-            std::string result = requestBody->getBody();
+            const std::string& result = requestBody->getBody();
 
             REQUIRE(result == expectedOutput.str());
         }
@@ -102,10 +102,10 @@ SCENARIO("Newly constructed FormdataRequestBody", "FormdataRequestBody")
     {
         auto requestBody = new getit::domain::FormdataRequestBody(boundary);
 
-        std::string elementKey = "MyBodyKey";
-        std::string elementValue = "This&is=My+Body@";
-        std::string fileKey = "MyFile";
-        std::string filePath = "./tst_file.txt";
+        const std::string& elementKey = "MyBodyKey";
+        const std::string& elementValue = "This&is=My+Body@";
+        const std::string& fileKey = "MyFile";
+        const std::string& filePath = "./tst_file.txt";
 
         auto expectedElementOutput = boost::format(
             "--%1%\r\nContent-Disposition: form-data; name=\"%2%\"\r\n\r\n%3%\r\n"
@@ -124,7 +124,7 @@ SCENARIO("Newly constructed FormdataRequestBody", "FormdataRequestBody")
 
         THEN("the body should include both the file and value")
         {
-            std::string result = requestBody->getBody();
+            const std::string& result = requestBody->getBody();
 
             REQUIRE(result == expectedOutput.str());
         }

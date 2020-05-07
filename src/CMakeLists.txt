@@ -9,6 +9,8 @@ find_package(Qt5 COMPONENTS Widgets REQUIRED)
 find_package(cpprestsdk REQUIRED)
 find_package(Boost COMPONENTS thread system chrono REQUIRED)
 
+set(CMAKE_CXX_STANDARD 20)
+
 set(SOURCEFILES
     main.cpp
     domain/CppRestRequest.cpp

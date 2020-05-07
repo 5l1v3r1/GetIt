@@ -8,12 +8,12 @@ SCENARIO("Newly constructed RawRequestBody")
 
     WHEN("The contentType is given through the constructor")
     {
-        std::string contentType = "application/json";
+        const std::string& contentType = "application/json";
         auto requestBody = new getit::domain::RawRequestBody(contentType);
 
         THEN("the given contentType is returned")
         {
-            std::string result = requestBody->getContentType();
+            const std::string& result = requestBody->getContentType();
 
             REQUIRE(result == contentType);
         }
@@ -22,11 +22,11 @@ SCENARIO("Newly constructed RawRequestBody")
     WHEN("No contentType is given through the constructor")
     {
         auto requestBody = new getit::domain::RawRequestBody();
-        std::string defaultContentType = "text/plain";
+        const std::string& defaultContentType = "text/plain";
 
         THEN("the default contentType is returned")
         {
-            std::string result = requestBody->getContentType();
+            const std::string& result = requestBody->getContentType();
 
             REQUIRE(result == defaultContentType);
         }
@@ -38,16 +38,9 @@ SCENARIO("Newly constructed RawRequestBody")
 
         THEN("the output is an empty string")
         {
-            std::string result = requestBody->getBody();
+            const std::string& result = requestBody->getBody();
 
-            REQUIRE(result == "");
-        }
-
-        THEN("the output is zero")
-        {
-            size_t result = requestBody->getSize();
-
-            REQUIRE(result == 0);
+            REQUIRE(result.empty());
         }
     }
 }

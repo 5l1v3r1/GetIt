@@ -1,9 +1,7 @@
 #include <catch2/catch.hpp>
-#include <trompeloeil.hpp>
 #include <map>
 #include <string>
 
-#include <cpprest/http_client.h>
 #include <cpprest/http_listener.h>
 
 
@@ -11,16 +9,10 @@
 #include "domain/FormdataRequestBody.hpp"
 #include "domain/RawRequestBody.hpp"
 
-#include <iostream>
-
-// Global variables
-std::string header = "CustomHeader";
-std::string headerValue = "CustomHeaderValue";
-
 // Helper method to retrieve a uri with
 // a given resource so the test cases
 // don't block each other
-std::string getUri(std::string resource)
+std::string getUri(const std::string& resource)
 {
     return "http://127.0.0.1:1874/" + resource;
 }
@@ -38,7 +30,7 @@ void sendRequest(web::http::experimental::listener::http_listener* listener, get
 
 // Helper method to validate an expected header from
 // the headers map given by CppRestSdk
-bool validateHeader(web::http::http_headers headers, std::string expectedHeader, std::string expectedValue)
+bool validateHeader(const web::http::http_headers& headers, const std::string& expectedHeader, const std::string& expectedValue)
 {
     for (auto const& [header, value]: headers) {
         if (header == expectedHeader) {
@@ -53,7 +45,9 @@ SCENARIO("Newly constructed CppRestRequest")
 {
     WHEN("a GET request is being sent")
     {
-        std::string uri = getUri("getHeadersTest");
+        const std::string& header = "Header";
+        const std::string& headerValue = "HeaderValue";
+        const std::string& uri = getUri("getHeadersTest");
         auto listener = new web::http::experimental::listener::http_listener(uri);
         auto request = new getit::domain::CppRestRequest("GET", uri);
 
@@ -138,7 +132,7 @@ SCENARIO("Newly constructed CppRestRequest")
         auto request = new getit::domain::CppRestRequest("GET", uri);
 
         listener->open().wait();
-        listener->support(web::http::methods::GET, [=](web::http::http_request request) {
+        listener->support(web::http::methods::GET, [=](const web::http::http_request& request) {
             web::http::http_response response;
             response.set_status_code(statusCode);
 
@@ -164,7 +158,7 @@ SCENARIO("Newly constructed CppRestRequest")
         auto request = new getit::domain::CppRestRequest("GET", uri);
 
         listener->open().wait();
-        listener->support(web::http::methods::GET, [=](web::http::http_request request) {
+        listener->support(web::http::methods::GET, [=](const web::http::http_request& request) {
             web::http::http_response response;
             response.headers().add(header, headerValue);
 
@@ -193,7 +187,7 @@ SCENARIO("Newly constructed CppRestRequest")
         auto request = new getit::domain::CppRestRequest("GET", uri);
 
         listener->open().wait();
-        listener->support(web::http::methods::GET, [=](web::http::http_request request) {
+        listener->support(web::http::methods::GET, [=](const web::http::http_request& request) {
             web::http::http_response response;
             response.set_body(responseBody);
 
