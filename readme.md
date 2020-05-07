@@ -6,7 +6,7 @@
 
 ## Build application
 
-```
+```bash
 $ cd build
 $ cmake ../ -DOPENSSL_INCLUDE_DIR=/usr/local/Cellar/openssl/1.0.2t/lib
 $ make getit
@@ -15,7 +15,7 @@ $ ./bin/getit
 
 ## Run tests
 
-```
+```bash
 $ cd build
 $ cmake ../ -DOPENSSL_INCLUDE_DIR=/usr/local/Cellar/openssl/1.0.2t/lib
 $ make getit_tests
@@ -23,9 +23,8 @@ $ ./bin/getit_tests
 ```
 
 *Known errors:
-
-- Could NOT find OpenSSL
-	- Run `cmake` with the `OPENSSL_INCLUDE_DIR` variable, for example: `cmake ../ -DOPENSSL_INCLUDE_DIR=/usr/local/Cellar/openssl/1.0.2t/include`
+  - Could NOT find OpenSSL
+    - Run `cmake` with the `OPENSSL_INCLUDE_DIR` variable, for example: `cmake ../ -DOPENSSL_INCLUDE_DIR=/usr/local/Cellar/openssl/1.0.2t/include`
 
 ### Dependencies
 
@@ -39,6 +38,6 @@ The Microsoft CPP Rest SDK uses the OpenSSL package.
 
 #### Boost packages
 
-- thread
-- system
-- chrono
+  - thread
+  - system
+  - chrono
