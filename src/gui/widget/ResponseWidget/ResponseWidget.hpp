@@ -17,8 +17,8 @@ namespace getit::gui::widget
         Q_OBJECT
 
         public:
-            ResponseWidget(QWidget* parent = nullptr);
-            ~ResponseWidget();
+            explicit ResponseWidget(QWidget* parent = nullptr);
+            ~ResponseWidget() override;
 
         private:
             Ui::ResponseWidget* ui;

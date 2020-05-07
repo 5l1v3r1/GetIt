@@ -20,8 +20,8 @@ namespace getit::gui::widget
         Q_OBJECT
         
         public:
-            FormdataBodyWidget(QWidget* parent = nullptr);
-            ~FormdataBodyWidget();
+            explicit FormdataBodyWidget(QWidget* parent = nullptr);
+            ~FormdataBodyWidget() override;
 
             std::string getName() override;
             getit::domain::RequestBody* getRequestBody() override;

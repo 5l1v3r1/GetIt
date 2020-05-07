@@ -19,8 +19,8 @@ namespace getit::gui::window
         Q_OBJECT
 
         public:
-            MainWindow(getit::domain::RequestFactory* requestFactory, QWidget* parent = nullptr);
-            ~MainWindow();
+            explicit MainWindow(getit::domain::RequestFactory* requestFactory, QWidget* parent = nullptr);
+            ~MainWindow() override;
 
         private:
             Ui::MainWindow* ui;

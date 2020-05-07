@@ -15,8 +15,8 @@ namespace getit::gui::widget
         Q_OBJECT
 
         public:
-            FormdataWidget(QWidget* parent = nullptr);
-            ~FormdataWidget();
+            explicit FormdataWidget(QWidget* parent = nullptr);
+            ~FormdataWidget() override;
 
             bool isFile();
             std::string getKey();

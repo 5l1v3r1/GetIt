@@ -17,8 +17,8 @@ namespace getit::gui::widget
         Q_OBJECT
 
         public:
-            RawBodyWidget(QWidget* parent = nullptr);
-            ~RawBodyWidget();
+            explicit RawBodyWidget(QWidget* parent = nullptr);
+            ~RawBodyWidget() override;
 
             std::string getName() override;
             getit::domain::RequestBody* getRequestBody() override;

@@ -14,8 +14,8 @@ namespace getit::gui::widget
         Q_OBJECT
 
         public:
-            HeaderWidget(QWidget* parent = nullptr);
-            ~HeaderWidget();
+            explicit HeaderWidget(QWidget* parent = nullptr);
+            ~HeaderWidget() override;
 
             std::string getKey();
             std::string getValue();
