@@ -7,7 +7,7 @@ set(CMAKE_AUTORCC ON)
 
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
 find_package(cpprestsdk REQUIRED)
-find_package(Boost COMPONENTS thread system chrono REQUIRED)
+find_package(Boost COMPONENTS system REQUIRED)
 
 set(CMAKE_CXX_STANDARD 20)
 
