@@ -31,7 +31,7 @@ jobs:
       os: linux
       compiler: gcc
       install: &install_linux
-        - pip3 install --upgrade pip3
+        - pip3 install --upgrade pip
         - pip3 install conan
         - wget https://github.com/Kitware/CMake/releases/download/v3.15.7/cmake-3.15.7-Linux-x86_64.tar.gz
         - tar -xf cmake-3.15.7-Linux-x86_64.tar.gz
