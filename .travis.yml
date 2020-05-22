@@ -29,10 +29,12 @@ jobs:
 
     - stage: test
       os: linux
+      language: python
+      python: "3.7"
       compiler: gcc
       install: &install_linux
-        - pip3 install --upgrade pip
-        - pip3 install conan
+        - pip install --upgrade pip
+        - pip install conan
         - wget https://github.com/Kitware/CMake/releases/download/v3.15.7/cmake-3.15.7-Linux-x86_64.tar.gz
         - tar -xf cmake-3.15.7-Linux-x86_64.tar.gz
         - export PATH=`pwd`/cmake-3.15.7-Linux-x86_64/bin:$PATH
@@ -46,6 +48,8 @@ jobs:
 
     - stage: test
       os: linux
+      language: python
+      python: "3.7"
       compiler: clang
       install: *install_linux
       before_script: *before_script
@@ -77,6 +81,8 @@ jobs:
     ###############################
     - stage: build
       os: linux
+      language: python
+      python: "3.7"
       compiler: gcc
       install: *install_linux
       before_script: *before_script
@@ -87,6 +93,8 @@ jobs:
 
     - stage: build
       os: linux
+      language: python
+      python: "3.7"
       compiler: clang
       install: *install_linux
       before_script: *before_script
