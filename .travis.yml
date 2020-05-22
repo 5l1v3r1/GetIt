@@ -11,11 +11,13 @@ addons:
       - libcpprest-dev
       - qt5-default
       - qtdeclarative5-dev
+      - python3
+      - python3-pip
 
   homebrew:
     update: true
     packages:
-      - cpprestsdk
+      - conan
       - qt5
 
 jobs:
@@ -29,12 +31,14 @@ jobs:
       os: linux
       compiler: gcc
       install: &install_linux
+        - pip3 install conan
         - wget https://github.com/Kitware/CMake/releases/download/v3.15.7/cmake-3.15.7-Linux-x86_64.tar.gz
         - tar -xf cmake-3.15.7-Linux-x86_64.tar.gz
         - export PATH=`pwd`/cmake-3.15.7-Linux-x86_64/bin:$PATH
       before_script: &before_script
         - cd build
       script: &script_linux_test
+        - conan ..
         - cmake ..
         - make getit_tests
         - ./bin/getit_tests
@@ -55,6 +59,7 @@ jobs:
         - export PATH=`pwd`/cmake-3.15.7-Darwin-x86_64/bin:$PATH
       before_script: *before_script
       script: &script_macos_test
+        - conan ..
         - cmake .. -DCMAKE_PREFIX_PATH=/usr/local/Cellar/qt/5.14.1
         - make getit_tests
         - ./bin/getit_tests
@@ -75,6 +80,7 @@ jobs:
       install: *install_linux
       before_script: *before_script
       script: &script_linux_build
+        - conan ..
         - cmake ..
         - make getit
 
@@ -91,6 +97,7 @@ jobs:
       install: *install_macos
       before_script: *before_script
       script: &script_macos_build
+        - conan ..
         - cmake .. -DCMAKE_PREFIX_PATH=/usr/local/Cellar/qt/5.14.1
         - make getit
 

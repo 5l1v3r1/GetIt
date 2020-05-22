@@ -1,11 +1,10 @@
 cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
 
-find_package(Qt5 COMPONENTS Widgets REQUIRED)
-find_package(cpprestsdk REQUIRED)
+find_package(Qt5 COMPONENTS Widgets Network REQUIRED)
 find_package(Boost COMPONENTS thread system chrono REQUIRED)
 
 set(SRCFILES
-    ../src/domain/CppRestRequest.cpp
+#    ../src/domain/CppRestRequest.cpp
     ../src/domain/FormdataRequestBody.cpp
     ../src/domain/RawRequestBody.cpp
     ../src/domain/Request.cpp
@@ -13,10 +12,13 @@ set(SRCFILES
 
 set(TST_SRCFILES
     main.cpp
-    domain/tst_CppRestRequest.cpp
+#    domain/tst_CppRestRequest.cpp
     domain/tst_FormdataRequestBody.cpp
     domain/tst_RawRequestBody.cpp
 )
+
+include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+conan_basic_setup()
 
 add_executable(getit_tests ${SRCFILES} ${TST_SRCFILES})
 
@@ -24,7 +26,7 @@ add_executable(getit_tests ${SRCFILES} ${TST_SRCFILES})
 include_directories(../src)
 
 # Libraries
+target_link_libraries(getit_tests ${CONAN_LIBS})
 target_link_libraries(getit_tests trompeloeil Catch2::Catch2)
-target_link_libraries(getit_tests cpprestsdk::cpprest cpprestsdk::cpprestsdk_zlib_internal cpprestsdk::cpprestsdk_boost_internal cpprestsdk::cpprestsdk_openssl_internal)
 
 add_test(NAME getit_tests  COMMAND getit_tests)

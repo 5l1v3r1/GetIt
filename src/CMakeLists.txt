@@ -6,7 +6,6 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
-find_package(cpprestsdk REQUIRED)
 find_package(Boost COMPONENTS system REQUIRED)
 
 set(CMAKE_CXX_STANDARD 20)
@@ -51,11 +50,14 @@ set(HEADERFILES
     gui/window/MainWindow/MainWindow.hpp
 )
 
+include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+conan_basic_setup()
+
 add_executable(getit
     ${HEADERFILES}
-    ${SOURCEFILES}  
+    ${SOURCEFILES}
 )
 
 # Libraries
+target_link_libraries(getit ${CONAN_LIBS})
 target_link_libraries(getit Qt5::Widgets)
-target_link_libraries(getit cpprestsdk::cpprest cpprestsdk::cpprestsdk_zlib_internal cpprestsdk::cpprestsdk_boost_internal cpprestsdk::cpprestsdk_openssl_internal)

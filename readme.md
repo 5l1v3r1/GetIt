@@ -8,22 +8,22 @@
 
 ```bash
 $ cd build
-$ cmake ../
+$ conan install ..
+$ cmake ..
 $ make getit
-$ ./bin/getit
+$ ./src/bin/getit
 ```
 
 ## Run tests
 
 ```bash
 $ cd build
-$ cmake ../
+$ canan install ..
+$ cmake ..
 $ make getit_tests
-$ ./bin/getit_tests
+$ ./tests/bin/getit_tests
 ```
 
 ### Dependencies
 
-#### cpprestsdk
-
-GetIt makes use of the [Microsoft CPP Rest SDK](https://github.com/Microsoft/cpprestsdk) library. Please checkout the documentation to see how you can [install](https://github.com/Microsoft/cpprestsdk#getting-started) this on your computer.
+The dependencies of GetIt are managed using [Conan](https://conan.io)
