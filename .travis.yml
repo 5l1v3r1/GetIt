@@ -29,6 +29,7 @@ jobs:
 
     - stage: test
       os: linux
+      dist: bionic
       language: python
       python: "3.7"
       compiler: gcc
@@ -48,6 +49,7 @@ jobs:
 
     - stage: test
       os: linux
+      dist: bionic
       language: python
       python: "3.7"
       compiler: clang
@@ -57,6 +59,8 @@ jobs:
 
     - stage: test
       os: osx
+      osx_image: xcode11.4
+      language: cpp
       compiler: gcc
       install: &install_macos
         - wget https://github.com/Kitware/CMake/releases/download/v3.15.7/cmake-3.15.7-Darwin-x86_64.tar.gz
@@ -64,8 +68,8 @@ jobs:
         - export PATH=`pwd`/cmake-3.15.7-Darwin-x86_64/bin:$PATH
       before_script: *before_script
       script: &script_macos_test
-        - conan install ..
-        - cmake .. -DCMAKE_PREFIX_PATH=/usr/local/Cellar/qt/5.14.1
+        - conan install .. -s compiler=apple-clang
+        - cmake .. -DCMAKE_PREFIX_PATH=/usr/local/opt/qt
         - make getit_tests
         - ./bin/getit_tests
 
@@ -81,6 +85,7 @@ jobs:
     ###############################
     - stage: build
       os: linux
+      dist: bionic
       language: python
       python: "3.7"
       compiler: gcc
@@ -93,6 +98,7 @@ jobs:
 
     - stage: build
       os: linux
+      dist: bionic
       language: python
       python: "3.7"
       compiler: clang
@@ -102,16 +108,20 @@ jobs:
 
     - stage: build
       os: osx
+      osx_image: xcode11.4
+      language: cpp
       compiler: gcc
       install: *install_macos
       before_script: *before_script
       script: &script_macos_build
         - conan install ..
-        - cmake .. -DCMAKE_PREFIX_PATH=/usr/local/Cellar/qt/5.14.1
+        - cmake .. -DCMAKE_PREFIX_PATH=/usr/local/opt/qt
         - make getit
 
     - stage: build
       os: osx
+      osx_image: xcode11.4
+      language: cpp
       compiler: clang
       install: *install_macos
       before_script: *before_script
