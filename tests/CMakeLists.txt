@@ -1,10 +1,11 @@
 cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
 
-find_package(Qt5 COMPONENTS Widgets Network REQUIRED)
 find_package(Boost COMPONENTS thread system chrono REQUIRED)
 
+set(CMAKE_CXX_STANDARD 20)
+
 set(SRCFILES
-#    ../src/domain/CppRestRequest.cpp
+    ../src/domain/CppRestRequest.cpp
     ../src/domain/FormdataRequestBody.cpp
     ../src/domain/RawRequestBody.cpp
     ../src/domain/Request.cpp
@@ -12,7 +13,7 @@ set(SRCFILES
 
 set(TST_SRCFILES
     main.cpp
-#    domain/tst_CppRestRequest.cpp
+    domain/tst_CppRestRequest.cpp
     domain/tst_FormdataRequestBody.cpp
     domain/tst_RawRequestBody.cpp
 )
