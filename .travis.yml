@@ -10,7 +10,7 @@ addons:
     packages:
       - qt5-default
       - qtdeclarative5-dev
-      - libboost-dev
+      - libboost-all-dev
 
   homebrew:
     update: true
