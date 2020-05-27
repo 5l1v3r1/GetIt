@@ -50,14 +50,11 @@ set(HEADERFILES
     gui/window/MainWindow/MainWindow.hpp
 )
 
-include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-conan_basic_setup()
-
 add_executable(getit
     ${HEADERFILES}
     ${SOURCEFILES}
 )
 
 # Libraries
-target_link_libraries(getit ${CONAN_LIBS})
+target_link_libraries(getit cpprest)
 target_link_libraries(getit Qt5::Widgets)

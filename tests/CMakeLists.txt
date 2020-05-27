@@ -18,16 +18,13 @@ set(TST_SRCFILES
     domain/tst_RawRequestBody.cpp
 )
 
-include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-conan_basic_setup()
-
 add_executable(getit_tests ${SRCFILES} ${TST_SRCFILES})
 
 # Include directories for dependencies
 include_directories(../src)
 
 # Libraries
-target_link_libraries(getit_tests ${CONAN_LIBS})
+target_link_libraries(getit_tests cpprest)
 target_link_libraries(getit_tests trompeloeil Catch2::Catch2)
 
 add_test(NAME getit_tests  COMMAND getit_tests)
