@@ -1,9 +1,6 @@
 #include "gui/widget/ResponseWidget/ResponseWidget.hpp"
 #include "./ui_ResponseWidget.h"
 
-#include <QtextEdit>
-#include <QSyntaxHighlighter>
-
 using namespace getit::gui::widget;
 
 ResponseWidget::ResponseWidget(QWidget* parent):
