@@ -10,11 +10,13 @@ addons:
     packages:
       - qt5-default
       - qtdeclarative5-dev
+      - libboost-dev
 
   homebrew:
     update: true
     packages:
       - qt5
+      - boost
 
 jobs:
   include:
