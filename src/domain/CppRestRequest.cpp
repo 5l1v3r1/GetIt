@@ -1,31 +1,28 @@
 #include "domain/CppRestRequest.hpp"
 
+#include <utility>
+
 using namespace getit::domain;
 
-CppRestRequest::CppRestRequest(std::string method, std::string uri, web::http::client::http_client client):
+CppRestRequest::CppRestRequest(const std::string& method, const std::string& uri, const web::http::client::http_client& client):
     Request(method, uri),
     client(client)
 {
     
 }
 
-CppRestRequest::CppRestRequest(std::string method, std::string uri):
+CppRestRequest::CppRestRequest(const std::string& method, const std::string& uri):
     CppRestRequest(method, uri, web::http::client::http_client(uri))
 {
     
 }
 
-CppRestRequest::~CppRestRequest()
-{
-    
-}
-
-void CppRestRequest::send(std::function<void(Response* response)> callback)
+void CppRestRequest::send(std::function<void(Response*)> callback)
 {
     web::http::http_request request = this->buildRequest();  
 
     this->client.request(request).then([=](web::http::http_response restResponse) {
-        auto response = this->buildResponse(restResponse);
+        const auto& response = getit::domain::CppRestRequest::buildResponse(std::move(restResponse));
 
         callback(response);
     });
@@ -59,9 +56,9 @@ void CppRestRequest::addBodyToRequest(web::http::http_request* request)
 
 Response* CppRestRequest::buildResponse(web::http::http_response restResponse)
 {
-    auto response = new Response();
+    const auto& response = new Response();
     bool ignoreContentType = true;
-        
+
     response->body = restResponse.extract_string(ignoreContentType).get();
     response->statusCode = restResponse.status_code();
 

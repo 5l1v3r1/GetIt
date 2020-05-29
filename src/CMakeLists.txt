@@ -18,15 +18,7 @@ set(SOURCEFILES
     domain/RequestFactory.cpp
     domain/RawRequestBody.cpp
 
-    gui/widget/BodyWidget/BodyWidget.cpp
-    gui/widget/FormdataBodyWidget/FormdataBodyWidget.cpp
-    gui/widget/FormdataWidget/FormdataWidget.cpp
-    gui/widget/HeadersWidget/HeadersWidget.cpp
-    gui/widget/HeaderWidget/HeaderWidget.cpp
-    gui/widget/RawBodyWidget/RawBodyWidget.cpp
-    gui/widget/ResponseWidget/ResponseWidget.cpp
-
-    gui/window/MainWindow/MainWindow.cpp
+    gui/MainWindow/MainWindow.cpp
 )
 
 set(HEADERFILES
@@ -38,16 +30,7 @@ set(HEADERFILES
     domain/RequestFactory.hpp
     domain/Response.hpp
 
-    gui/widget/BodyWidget/Body.hpp
-    gui/widget/BodyWidget/BodyWidget.hpp
-    gui/widget/FormdataBodyWidget/FormdataBodyWidget.hpp
-    gui/widget/FormdataWidget/FormdataWidget.hpp
-    gui/widget/HeadersWidget/HeadersWidget.hpp
-    gui/widget/HeadersWidget/HeadersWidget.cpp
-    gui/widget/RawBodyWidget/RawBodyWidget.hpp
-    gui/widget/ResponseWidget/ResponseWidget.hpp
-
-    gui/window/MainWindow/MainWindow.hpp
+    gui/MainWindow/MainWindow.hpp
 )
 
 add_executable(getit

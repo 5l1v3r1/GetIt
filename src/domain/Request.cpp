@@ -1,15 +1,17 @@
 #include "domain/Request.hpp"
 
+#include <utility>
+
 using namespace getit::domain;
 
-Request::Request(std::string method, std::string uri):
+Request::Request(const std::string&  method, const std::string&  uri):
     method(method),
     uri(uri)
 {
 
 }
 
-void Request::addHeader(std::string header, std::string value)
+void Request::addHeader(const std::string& header, const std::string& value)
 {
     this->headers.insert({header, value});
 }

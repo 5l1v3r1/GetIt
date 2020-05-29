@@ -2,25 +2,20 @@
 
 using namespace getit::domain;
 
-FormdataRequestBody::FormdataRequestBody(std::string boundary):
+FormdataRequestBody::FormdataRequestBody(const std::string& boundary):
     boundary(boundary)
 {
 
 }
 
-FormdataRequestBody::~FormdataRequestBody()
-{
-
-}
-
-void FormdataRequestBody::addElement(std::string key, std::string value)
+void FormdataRequestBody::addElement(const std::string& key, const std::string& value)
 {
     this->body.push_back(
         this->buildContentData(key, value)
     );
 }
 
-void FormdataRequestBody::addFile(std::string key, std::string filePath)
+void FormdataRequestBody::addFile(const std::string& key, const std::string& filePath)
 {
     std::ifstream inputFileStream(filePath);
     std::string value(
@@ -62,7 +57,7 @@ size_t FormdataRequestBody::getSize()
     return this->getBody().size();
 }
 
-std::string FormdataRequestBody::buildContentData(std::string key, std::string value)
+std::string FormdataRequestBody::buildContentData(const std::string& key, const std::string& value)
 {
     boost::format frmt = boost::format(
         "--%1%\r\nContent-Disposition: form-data; name=\"%2%\"\r\n\r\n%3%\r\n"
@@ -71,7 +66,7 @@ std::string FormdataRequestBody::buildContentData(std::string key, std::string v
     return frmt.str();
 }
 
-std::string FormdataRequestBody::buildContentDataFile(std::string key, std::string fileName, std::string contents)
+std::string FormdataRequestBody::buildContentDataFile(const std::string& key, const std::string& fileName, const std::string& contents)
 {
     boost::format frmt = boost::format(
         "--%1%\r\nContent-Disposition: form-data; name=\"%2%\"; filename=\"%3%\"\r\n\r\n%4%\r\n"

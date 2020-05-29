@@ -1,7 +1,8 @@
 #pragma once
 
-#include <string>
 #include <cpprest/http_client.h>
+#include <string>
+#include <memory>
 
 #include "domain/Request.hpp"
 
@@ -10,11 +11,11 @@ namespace getit::domain
     class CppRestRequest: public Request
     {
         public:
-            CppRestRequest(std::string method, std::string uri);
-            CppRestRequest(std::string method, std::string uri, web::http::client::http_client client);
-            ~CppRestRequest() override;
+            CppRestRequest(const std::string& method, const std::string& uri);
+            CppRestRequest(const std::string& method, const std::string& uri, const web::http::client::http_client& client);
+            ~CppRestRequest() override = default;
 
-            void send(std::function<void(Response* response)> callback) override;
+            void send(std::function<void(Response*)> callback) override;
 
         private:
             web::http::client::http_client client;
@@ -22,6 +23,6 @@ namespace getit::domain
             web::http::http_request buildRequest();
             void addHeadersToRequest(web::http::http_request* request);
             void addBodyToRequest(web::http::http_request* request);
-            Response* buildResponse(web::http::http_response restResponse);
+            static Response* buildResponse(web::http::http_response restResponse);
     };
 }
