@@ -47,6 +47,7 @@ distributing the application.
 - Setup an automated CD pipeline
 - Setup CI for Windows machine
 - Setup Travis to generate test-coverage report
+- Setup GUI test framework
 
 ## 4. Required packages
 
