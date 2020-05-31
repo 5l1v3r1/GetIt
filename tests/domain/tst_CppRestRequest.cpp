@@ -93,6 +93,8 @@ TEST_CASE("CppRestRequest")
 
         // Assert
         listen(requestListener, method, [=](const http_request& request) {
+            REQUIRE_FALSE(request.headers().empty());
+
             bool foundHeader = false;
 
             for (const auto& [header, value] : request.headers()) {
@@ -105,6 +107,9 @@ TEST_CASE("CppRestRequest")
 
             REQUIRE(foundHeader);
         });
+
+        // Send request
+        sendAndDeleteRequest(request);
     }
 
     // After
