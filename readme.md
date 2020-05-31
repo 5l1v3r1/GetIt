@@ -33,6 +33,9 @@ missing a feature please do not hesitate to open a pull-request or create an iss
 Unfortunately there are only so many things we can implement in a specific time period, so there will be some
 features that aren't included in GetIt but that we will add in the future.
 
+- Update request API to allow for easy maneging of headers
+- Update request API to allow for easy maneging of cookies
+- Add API for adding settings to the request API
 - Syntax highlighting for the response
 - Authentication
     - Basic auth
@@ -40,6 +43,7 @@ features that aren't included in GetIt but that we will add in the future.
 - Custom time-out
 - Saving / opening a request
     - The response will be saved as well for offline usage
+- Reduce MainWindow class by refactoring multiple methods to other Widgets
 
 There are some things we want get up and running to make life easier for the developers of GetIt, mostly for
 distributing the application.
