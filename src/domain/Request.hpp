@@ -17,15 +17,13 @@ namespace getit::domain
             virtual ~Request() = default;
 
             void addHeader(const std::string& header, const std::string& value);
-            void addHeaders(std::map<std::string, std::string> headers);
-            void setBody(RequestBody* body);
+            void setBody(std::shared_ptr<RequestBody> body);
             virtual void send(std::function<void(Response*)> callback) = 0;
 
         protected:
             const std::string& method;
             const std::string& uri;
             std::map<std::string, std::string> headers;
-            RequestBody* body;
-//            std::shared_ptr<RequestBody> body;
+            std::shared_ptr<RequestBody> body;
     };
 }

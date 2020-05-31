@@ -2,8 +2,8 @@
 
 using namespace getit::domain;
 
-RawRequestBody::RawRequestBody(const std::string& contentType):
-    contentType(contentType)
+RawRequestBody::RawRequestBody(std::string contentType):
+    contentType(std::move(contentType))
 {
     
 }
@@ -14,9 +14,9 @@ RawRequestBody::RawRequestBody():
     
 }
 
-void RawRequestBody::setBody(const std::string& body)
+void RawRequestBody::setBody(std::string body)
 {
-    this->body = body;
+    this->body = std::move(body);
 }
 
 std::string RawRequestBody::getContentType()

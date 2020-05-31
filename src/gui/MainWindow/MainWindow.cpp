@@ -104,7 +104,7 @@ void MainWindow::connectFormdataSlots()
         const auto& fileName = QFileDialog::getOpenFileUrl(this);
 
         if (!fileName.isEmpty()) {
-            selectedItem->setText(1, fileName.toString());
+            selectedItem->setText(1, fileName.toLocalFile());
         }
 
         if (selectedItem->text(1).isEmpty()) {
@@ -123,7 +123,7 @@ void MainWindow::connectSendSlot()
                 const auto& uri = ui->textUri->text().toStdString();
                 const auto& contentType = ui->textContentType->text().toStdString();
                 const auto& bodyValue = ui->textBodyRaw->document()->toPlainText().toStdString();
-                const auto& requestBody = new getit::domain::RawRequestBody(contentType);
+                const auto& requestBody = std::make_shared<getit::domain::RawRequestBody>(contentType);
                 const auto& request = factory->getRequest(method, uri);
 
                 requestBody->setBody(bodyValue);

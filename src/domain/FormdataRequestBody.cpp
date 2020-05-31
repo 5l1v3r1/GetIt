@@ -2,8 +2,8 @@
 
 using namespace getit::domain;
 
-FormdataRequestBody::FormdataRequestBody(const std::string& boundary):
-    boundary(boundary)
+FormdataRequestBody::FormdataRequestBody(std::string boundary):
+    boundary(std::move(boundary))
 {
 
 }
@@ -39,6 +39,10 @@ std::string FormdataRequestBody::getContentType()
 
 std::string FormdataRequestBody::getBody()
 {
+    if (this->body.empty()) {
+        return "";
+    }
+
     std::string body;
 
     for (auto const& value: this->body) {

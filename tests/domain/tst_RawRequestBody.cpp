@@ -1,46 +1,60 @@
 #include <catch2/catch.hpp>
+#include <memory>
 #include <string>
 
 #include "domain/RawRequestBody.hpp"
 
-SCENARIO("Newly constructed RawRequestBody")
+using namespace getit::domain;
+
+TEST_CASE("getContentType returns the Content-Type that is set through the constructor")
 {
+    // Arrange
+    const auto& expectedContentType = "application/json";
+    const auto& requestBody = std::make_unique<RawRequestBody>(expectedContentType);
 
-    WHEN("The contentType is given through the constructor")
-    {
-        const std::string& contentType = "application/json";
-        auto requestBody = new getit::domain::RawRequestBody(contentType);
+    // Act
+    const auto& result = requestBody->getContentType();
 
-        THEN("the given contentType is returned")
-        {
-            const std::string& result = requestBody->getContentType();
+    // Assert
+    REQUIRE(expectedContentType == result);
+}
 
-            REQUIRE(result == contentType);
-        }
-    }
+TEST_CASE("getContentType returns default Content-Type when one isn't set through the constructor")
+{
+    // Arrange
+    const auto& expectedDefaultContentType = "text/plain";
+    const auto& requestBody = std::make_unique<RawRequestBody>();
 
-    WHEN("No contentType is given through the constructor")
-    {
-        auto requestBody = new getit::domain::RawRequestBody();
-        const std::string& defaultContentType = "text/plain";
+    // Act
+    const auto& result = requestBody->getContentType();
 
-        THEN("the default contentType is returned")
-        {
-            const std::string& result = requestBody->getContentType();
+    // Assert
+    REQUIRE(expectedDefaultContentType == result);
+}
 
-            REQUIRE(result == defaultContentType);
-        }
-    }
+TEST_CASE("getBody returns string value including linebreaks and tabs")
+{
+    // Arrange
+    const auto& expectedString = "This\nis a\r\nnewline";
+    const auto& requestBody = std::make_unique<RawRequestBody>();
 
-    WHEN("The data is requested")
-    {
-        auto requestBody = new getit::domain::RawRequestBody();
+    // Act
+    requestBody->setBody(expectedString);
+    const auto& result = requestBody->getBody();
 
-        THEN("the output is an empty string")
-        {
-            const std::string& result = requestBody->getBody();
+    // Assert
+    REQUIRE(expectedString == result);
+}
 
-            REQUIRE(result.empty());
-        }
-    }
+TEST_CASE("getBody returns empty string when no body is set")
+{
+    // Arrange
+    const auto& expectedEmptyString = "";
+    const auto& requestBody = std::make_unique<RawRequestBody>();
+
+    // Act
+    const auto& result = requestBody->getBody();
+
+    // Assert
+    REQUIRE(expectedEmptyString == result);
 }

@@ -2,18 +2,13 @@
 
 using namespace getit::domain;
 
-RequestFactory::RequestFactory(std::string requestType):
+RequestFactory::RequestFactory(const std::string& requestType):
     requestType(requestType)
 {
 
 }
 
-RequestFactory::~RequestFactory()
+std::shared_ptr<Request> RequestFactory::getRequest(const std::string& method, const std::string& uri)
 {
-    
-}
-
-Request* RequestFactory::getRequest(std::string method, std::string uri)
-{
-    return new CppRestRequest(method, uri);
+    return std::make_shared<CppRestRequest>(method, uri);
 }

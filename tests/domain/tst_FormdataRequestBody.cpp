@@ -1,139 +1,124 @@
-#include <catch2/catch.hpp>
-#include <string>
 #include <boost/format.hpp>
+#include <catch2/catch.hpp>
+#include <memory>
+#include <string>
 
 #include "domain/FormdataRequestBody.hpp"
 
-SCENARIO("Newly constructed FormdataRequestBody", "FormdataRequestBody")
+using namespace getit::domain;
+
+TEST_CASE("getContentType returns the Content-Type header with the boundary given through the constructor")
 {
-    std::string boundary = "--abc";
+    // Arrange
+    const auto& boundary = "my_boundary";
+    auto expectedContentType = boost::format("multipart/form-data; boundary=\"%1%\"") % boundary;
+    const auto& requestBody = std::make_unique<FormdataRequestBody>(boundary);
 
-    WHEN("The contentType is requested")
-    {
-        auto requestBody = new getit::domain::FormdataRequestBody(boundary);
+    // Act
+    const auto& result = requestBody->getContentType();
 
-        THEN("the contentType with the given boundary is returned")
-        {
-            auto expectedContentType = boost::format(
-                "multipart/form-data; boundary=\"%1%\""
-            ) % boundary;
-            
-            std::string result = requestBody->getContentType();
-
-            REQUIRE(result == expectedContentType.str());
-        }
-    }
-
-    WHEN("A value is added to the body")
-    {
-        auto requestBody = new getit::domain::FormdataRequestBody(boundary);
-        const std::string& key = "MyBodyKey";
-        const std::string& value = "This&is=My+Body@";
-    
-        auto expectedOutput = boost::format(
-            "--%1%\r\nContent-Disposition: form-data; name=\"%2%\"\r\n\r\n%3%\r\n\r\n--%1%--\r\n"
-        ) % boundary % key % value;
-
-        requestBody->addElement(key, value);
-
-        THEN("the body should include the value")
-        {
-            const std::string& result = requestBody->getBody();
-
-            REQUIRE(result == expectedOutput.str());
-        }
-    }
-
-    WHEN("A non-existing file is added to the body")
-    {
-        auto requestBody = new getit::domain::FormdataRequestBody(boundary);
-        const std::string& key = "MyFile";
-        const std::string& filePath = "../non-existing-file.non_existing_ext";
-
-        auto expectedOutput = boost::format(
-            "--%1%\r\nContent-Disposition: form-data; name=\"%2%\"; filename=\"%3%\"\r\n\r\n\r\n\r\n--%1%--\r\n"
-        ) % boundary % key % filePath;
-
-        requestBody->addFile(key, filePath);
-
-        THEN("the body should include the file without any data")
-        {
-            const std::string& result = requestBody->getBody();
-
-            REQUIRE(result == expectedOutput.str());
-        }
-
-        THEN("the size of the body should be the same as the size of the expected body")
-        {
-            const size_t result = requestBody->getSize();
-
-            REQUIRE(result == expectedOutput.str().size());
-        }
-    }
-
-    WHEN("An existing file is added to the body")
-    {
-        auto requestBody = new getit::domain::FormdataRequestBody(boundary);
-        const std::string& key = "MyFile";
-        const std::string& filePath = "./tst_file.txt";
-
-        auto expectedOutput = boost::format(
-            "--%1%\r\nContent-Disposition: form-data; name=\"%2%\"; filename=\"%3%\"\r\n\r\ncontent\r\n\r\n--%1%--\r\n"
-        ) % boundary % key % filePath;
-
-        requestBody->addFile(key, filePath);
-
-        THEN("the body should include the file with it's contents")
-        {
-            const std::string& result = requestBody->getBody();
-
-            REQUIRE(result == expectedOutput.str());
-        }
-
-        THEN("the size of the body should be the same as the size of the expected body")
-        {
-            size_t result = requestBody->getSize();
-
-            REQUIRE(result == expectedOutput.str().size());
-        }
-    }
-
-    WHEN("An existing file and an element are added to the body")
-    {
-        auto requestBody = new getit::domain::FormdataRequestBody(boundary);
-
-        const std::string& elementKey = "MyBodyKey";
-        const std::string& elementValue = "This&is=My+Body@";
-        const std::string& fileKey = "MyFile";
-        const std::string& filePath = "./tst_file.txt";
-
-        auto expectedElementOutput = boost::format(
-            "--%1%\r\nContent-Disposition: form-data; name=\"%2%\"\r\n\r\n%3%\r\n"
-        ) % boundary % elementKey % elementValue;
-
-        auto expectedFileOutput = boost::format(
-            "--%1%\r\nContent-Disposition: form-data; name=\"%2%\"; filename=\"%3%\"\r\n\r\ncontent\r\n"
-        ) % boundary % fileKey % filePath;
-
-        auto expectedOutput = boost::format(
-            "%1%%2%\r\n--%3%--\r\n"
-        ) % expectedFileOutput % expectedElementOutput % boundary;
-
-        requestBody->addFile(fileKey, filePath);
-        requestBody->addElement(elementKey, elementValue);
-
-        THEN("the body should include both the file and value")
-        {
-            const std::string& result = requestBody->getBody();
-
-            REQUIRE(result == expectedOutput.str());
-        }
-
-        THEN("the size of the body should be the sizes of the expected outputs combined")
-        {
-            size_t result = requestBody->getSize();
-
-            REQUIRE(result == expectedOutput.str().size());
-        }
-    }
+    // Assert
+    REQUIRE(expectedContentType.str() == result);
 }
+
+TEST_CASE("getBody returns empty string when no elements or files are added")
+{
+    // Arrange
+    const auto& boundary = "my_boundary";
+    const auto& expectedBody = "";
+    const auto& requestBody = std::make_unique<FormdataRequestBody>(boundary);
+
+    // Act
+    const auto& result = requestBody->getBody();
+
+    // Assert
+    REQUIRE(expectedBody == result);
+}
+
+TEST_CASE("getBody returns string with unescaped characters in the form-data template")
+{
+    // Arrange
+    const auto& boundary = "my_boundary";
+    const auto& formdataKey = "myKey";
+    const auto& formdataValue = "&mySpeci@lValu3s!s";
+    const auto& requestBody = std::make_unique<FormdataRequestBody>(boundary);
+    auto expectedBody = boost::format(
+        "--%1%\r\nContent-Disposition: form-data; name=\"%2%\"\r\n\r\n%3%\r\n\r\n--%1%--\r\n"
+    ) % boundary % formdataKey % formdataValue;
+
+    // Act
+    requestBody->addElement(formdataKey, formdataValue);
+    const auto& result = requestBody->getBody();
+
+    // Assert
+    REQUIRE(expectedBody.str() == result);
+}
+
+TEST_CASE("getBody returns complete form-data template with emtpy file contents for a non-existing file")
+{
+    // Arrange
+    const auto& boundary = "my_boundary";
+    const auto& fileName = "My non existing file";
+    const auto& nonExistingFilePath = "./non-exsting-file.txt";
+    auto expectedBody = boost::format(
+        "--%1%\r\nContent-Disposition: form-data; name=\"%2%\"; filename=\"%3%\"\r\n\r\n\r\n\r\n--%1%--\r\n"
+    ) % boundary % fileName % nonExistingFilePath;
+    const auto& requestBody = std::make_unique<FormdataRequestBody>(boundary);
+
+    // Act
+    requestBody->addFile(fileName, nonExistingFilePath);
+    const auto& result = requestBody->getBody();
+
+    // Assert
+    REQUIRE(expectedBody.str() == result);
+}
+
+TEST_CASE("getBody returns complete form-data template with contents of the file for an existing file")
+{
+    // Arrange
+    const auto& boundary = "my_boundary";
+    const auto& fileName = "My existing file";
+    const auto& existingFilePath = "./tst_file.txt";
+    const auto& fileContents = "content";
+    auto expectedBody = boost::format(
+        "--%1%\r\nContent-Disposition: form-data; name=\"%2%\"; filename=\"%3%\"\r\n\r\n%4%\r\n\r\n--%1%--\r\n"
+    ) % boundary % fileName % existingFilePath % fileContents;
+    const auto& requestBody = std::make_unique<FormdataRequestBody>(boundary);
+
+    // Act
+    requestBody->addFile(fileName, existingFilePath);
+    const auto& result = requestBody->getBody();
+
+    // Assert
+    REQUIRE(expectedBody.str() == result);
+}
+
+TEST_CASE("getBody returns complete form-data template with elements and content of a file for an existing file")
+{
+    // Arrange
+    const auto& boundary = "my_boundary";
+    const auto& fileName = "My existing file";
+    const auto& existingFilePath = "./tst_file.txt";
+    const auto& fileContents = "content";
+    const auto& formdataElement = "MyElement";
+    const auto& formdataElementValue = "MyElementsValue";
+    auto expectedFormdataElementBody = boost::format(
+        "--%1%\r\nContent-Disposition: form-data; name=\"%2%\"\r\n\r\n%3%\r\n"
+    ) % boundary % formdataElement % formdataElementValue;
+    auto expectedFileBody = boost::format(
+        "--%1%\r\nContent-Disposition: form-data; name=\"%2%\"; filename=\"%3%\"\r\n\r\n%4%\r\n"
+    ) % boundary % fileName % existingFilePath % fileContents;
+    auto expectedBody = boost::format(
+        "%1%%2%\r\n--%3%--\r\n"
+    ) % expectedFileBody % expectedFormdataElementBody % boundary;
+    const auto& requestBody = std::make_unique<FormdataRequestBody>(boundary);
+
+    // Act
+    requestBody->addFile(fileName, existingFilePath);
+    requestBody->addElement(formdataElement, formdataElementValue);
+    const auto& result = requestBody->getBody();
+
+    // Assert
+    REQUIRE(expectedBody.str() == result);
+}
+

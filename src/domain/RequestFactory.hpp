@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include <string>
 
 #include "domain/CppRestRequest.hpp"
@@ -10,12 +11,12 @@ namespace getit::domain
     class RequestFactory
     {
         public:
-            explicit RequestFactory(std::string requestType);
-            ~RequestFactory();
+            explicit RequestFactory(const std::string& requestType);
+            ~RequestFactory() = default;
 
-            Request* getRequest(std::string method, std::string uri);
+            static std::shared_ptr<Request> getRequest(const std::string& method, const std::string& uri);
 
         private:
-            std::string requestType;
+            const std::string& requestType;
     };
 }

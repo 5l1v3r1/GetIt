@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
 
-find_package(Boost COMPONENTS thread system chrono REQUIRED)
-
 set(CMAKE_CXX_STANDARD 20)
+
+find_package(Boost COMPONENTS thread system chrono REQUIRED)
 
 set(SRCFILES
     ../src/domain/CppRestRequest.cpp
@@ -24,6 +24,7 @@ add_executable(getit_tests ${SRCFILES} ${TST_SRCFILES})
 include_directories(../src)
 
 # Libraries
+target_link_libraries(getit_tests Boost::system)
 target_link_libraries(getit_tests cpprest)
 target_link_libraries(getit_tests trompeloeil Catch2::Catch2)
 

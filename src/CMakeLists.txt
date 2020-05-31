@@ -39,5 +39,6 @@ add_executable(getit
 )
 
 # Libraries
+target_link_libraries(getit Boost::system)
 target_link_libraries(getit cpprest)
 target_link_libraries(getit Qt5::Widgets)
