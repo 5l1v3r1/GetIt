@@ -33,8 +33,8 @@ missing a feature please do not hesitate to open a pull-request or create an iss
 Unfortunately there are only so many things we can implement in a specific time period, so there will be some
 features that aren't included in GetIt but that we will add in the future.
 
-- Update request API to allow for easy maneging of headers
-- Update request API to allow for easy maneging of cookies
+- Update request API to allow for easy managing of headers
+- Update request API to allow for easy managing of cookies
 - Add API for adding settings to the request API
 - Syntax highlighting for the response
 - Authentication
