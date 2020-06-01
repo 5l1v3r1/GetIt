@@ -21,8 +21,6 @@ namespace getit::gui::widget
 {
     class RequestInfoWidget: public QWidget, public RequestWidget
     {
-        Q_OBJECT
-
     public:
         explicit RequestInfoWidget(QWidget* parent = nullptr);
         ~RequestInfoWidget() override;

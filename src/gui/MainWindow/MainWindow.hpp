@@ -2,19 +2,17 @@
 
 #include <boost/format.hpp>
 #include <memory>
-#include <QFileDialog>
 #include <QListWidgetItem>
 #include <QMainWindow>
 #include <QPushButton>
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
 
-#include "domain/FormdataRequestBody.hpp"
-#include "domain/RawRequestBody.hpp"
 #include "domain/Request.hpp"
 #include "domain/RequestFactory.hpp"
 #include "domain/Response.hpp"
 
+#include "gui/widget/BodyWidget/BodyWidget.hpp"
 #include "gui/widget/RequestInfoWidget/RequestInfoWidget.hpp"
 
 QT_BEGIN_NAMESPACE
@@ -33,17 +31,14 @@ namespace getit::gui
 
     private:
         void connectSignals();
-        void connectFormdataSlots();
         void connectSendSlot();
-        static std::string generateBoundary();
 
-        Qt::ItemFlags treeWidgetItemFlags = Qt::ItemIsEditable | Qt::ItemIsSelectable | Qt::ItemIsUserCheckable | Qt::ItemIsEnabled;
         Ui::MainWindow* ui;
         std::shared_ptr<widget::RequestInfoWidget> requestInfoWidget;
+        std::shared_ptr<widget::BodyWidget> bodyWidget;
         const std::shared_ptr<getit::domain::RequestFactory>& factory;
 
     private slots:
-        void formdataItemsChanged(QTreeWidgetItem*, int);
         void setResponse(getit::domain::Response* response);
 
     signals:

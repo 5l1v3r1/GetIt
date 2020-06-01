@@ -19,7 +19,8 @@ set(SOURCEFILES
     domain/RawRequestBody.cpp
 
     gui/MainWindow/MainWindow.cpp
-    gui/Widget/AuthenticationWidget/AuthenticationWidget.cpp
+    gui/widget/AuthenticationWidget/AuthenticationWidget.cpp
+    gui/widget/BodyWidget/BodyWidget.cpp
     gui/widget/CookiesWidget/CookiesWidget.cpp
     gui/widget/HeadersWidget/HeadersWidget.cpp
     gui/widget/RequestInfoWidget/RequestInfoWidget.cpp
@@ -36,7 +37,8 @@ set(HEADERFILES
     domain/Response.hpp
 
     gui/MainWindow/MainWindow.hpp
-    gui/Widget/AuthenticationWidget/AuthenticationWidget.hpp
+    gui/widget/AuthenticationWidget/AuthenticationWidget.hpp
+    gui/widget/BodyWidget/BodyWidget.hpp
     gui/widget/CookiesWidget/CookiesWidget.hpp
     gui/widget/HeadersWidget/HeadersWidget.hpp
     gui/widget/RequestInfoWidget/RequestInfoWidget.hpp
