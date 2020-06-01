@@ -19,6 +19,11 @@ set(SOURCEFILES
     domain/RawRequestBody.cpp
 
     gui/MainWindow/MainWindow.cpp
+    gui/Widget/AuthenticationWidget/AuthenticationWidget.cpp
+    gui/widget/CookiesWidget/CookiesWidget.cpp
+    gui/widget/HeadersWidget/HeadersWidget.cpp
+    gui/widget/RequestInfoWidget/RequestInfoWidget.cpp
+    gui/widget/RequestSettingsWidget/RequestSettingsWidget.cpp
 )
 
 set(HEADERFILES
@@ -31,6 +36,13 @@ set(HEADERFILES
     domain/Response.hpp
 
     gui/MainWindow/MainWindow.hpp
+    gui/Widget/AuthenticationWidget/AuthenticationWidget.hpp
+    gui/widget/CookiesWidget/CookiesWidget.hpp
+    gui/widget/HeadersWidget/HeadersWidget.hpp
+    gui/widget/RequestInfoWidget/RequestInfoWidget.hpp
+    gui/widget/RequestSettingsWidget/RequestSettingsWidget.hpp
+    gui/widget/RequestWidget.hpp
+    gui/widget/ResponseWidget.hpp
 )
 
 add_executable(getit

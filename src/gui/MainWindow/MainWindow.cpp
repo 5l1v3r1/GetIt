@@ -13,6 +13,10 @@ MainWindow::MainWindow(const std::shared_ptr<getit::domain::RequestFactory>& fac
     ui->setupUi(this);
 
     this->connectSignals();
+
+    // requestInfoWidget
+    this->requestInfoWidget = std::make_shared<widget::RequestInfoWidget>(this);
+    this->ui->requestInfoWidget->addWidget(requestInfoWidget.get());
 }
 
 MainWindow::~MainWindow()
@@ -22,43 +26,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::connectSignals()
 {
-    this->connectHeadersSlots();
-    this->connectCookiesSlots();
     this->connectFormdataSlots();
     this->connectSendSlot();
-}
-
-
-void MainWindow::connectHeadersSlots()
-{
-    connect(ui->btnAddHeader, &QPushButton::pressed,
-            this, [=]() {
-        const auto& row = new QTreeWidgetItem(ui->treeHeaders);
-        row->setText(0, "Key");
-        row->setText(1, "Value");
-        row->setFlags(treeWidgetItemFlags);
-    });
-
-    connect(ui->btnRemoveHeader, &QPushButton::pressed,
-            this, [=]() {
-        delete ui->treeHeaders->currentItem();
-    });
-}
-
-void MainWindow::connectCookiesSlots()
-{
-    connect(ui->btnAddCookie, &QPushButton::pressed,
-            this, [=]() {
-        const auto& row = new QTreeWidgetItem(ui->treeCookies);
-        row->setText(0, "Key");
-        row->setText(1, "Value");
-        row->setFlags(treeWidgetItemFlags);
-    });
-
-    connect(ui->btnRemoveCookie, &QPushButton::pressed,
-            this, [=]() {
-       delete ui->treeCookies->currentItem();
-    });
 }
 
 void MainWindow::connectFormdataSlots()
@@ -121,13 +90,13 @@ void MainWindow::connectSendSlot()
             this, [=]() {
                 const auto& method = ui->cbMethod->currentText().toStdString();
                 const auto& uri = ui->textUri->text().toStdString();
-                const auto& contentType = ui->textContentType->text().toStdString();
-                const auto& bodyValue = ui->textBodyRaw->document()->toPlainText().toStdString();
-                const auto& requestBody = std::make_shared<getit::domain::RawRequestBody>(contentType);
+//                const auto& contentType = ui->textContentType->text().toStdString();
+//                const auto& bodyValue = ui->textBodyRaw->document()->toPlainText().toStdString();
+//                const auto& requestBody = std::make_shared<getit::domain::RawRequestBody>(contentType);
                 const auto& request = factory->getRequest(method, uri);
 
-                requestBody->setBody(bodyValue);
-                request->setBody(requestBody);
+                this->requestInfoWidget->addToRequest(request);
+
 
                 request->send([=](getit::domain::Response* response) {
                     emit requestSent(response);

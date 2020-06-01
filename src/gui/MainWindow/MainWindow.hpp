@@ -15,6 +15,8 @@
 #include "domain/RequestFactory.hpp"
 #include "domain/Response.hpp"
 
+#include "gui/widget/RequestInfoWidget/RequestInfoWidget.hpp"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -31,14 +33,13 @@ namespace getit::gui
 
     private:
         void connectSignals();
-        void connectHeadersSlots();
-        void connectCookiesSlots();
         void connectFormdataSlots();
         void connectSendSlot();
         static std::string generateBoundary();
 
         Qt::ItemFlags treeWidgetItemFlags = Qt::ItemIsEditable | Qt::ItemIsSelectable | Qt::ItemIsUserCheckable | Qt::ItemIsEnabled;
         Ui::MainWindow* ui;
+        std::shared_ptr<widget::RequestInfoWidget> requestInfoWidget;
         const std::shared_ptr<getit::domain::RequestFactory>& factory;
 
     private slots:
