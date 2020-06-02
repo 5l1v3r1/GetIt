@@ -50,6 +50,7 @@ set(HEADERFILES
 add_executable(getit
     ${HEADERFILES}
     ${SOURCEFILES}
+    ../resources/resources.qrc
 )
 
 # Libraries

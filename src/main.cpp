@@ -5,11 +5,16 @@
 
 int main(int argc, char** argv)
 {
+    const auto& appName = "GetIt";
     const auto& requestFactory = std::make_shared<getit::domain::RequestFactory>("cpprestsdk");
 
-    QApplication a(argc, argv);
-    getit::gui::MainWindow w(requestFactory);
-    w.show();
+    QApplication app(argc, argv);
+    QApplication::setWindowIcon(QIcon(":icons/main"));
+    QApplication::setApplicationDisplayName(appName);
+    QApplication::setApplicationName(appName);
+
+    getit::gui::MainWindow window(requestFactory);
+    window.show();
 
     return QApplication::exec();
 }
