@@ -7,6 +7,10 @@ Testing/
 *_autogen/
 .idea/
 .vscode/
+CMakeFiles/
+CMakeScripts/
+*.xcodeproj
+*.build
 
 .DS_Store
 *.cbp
