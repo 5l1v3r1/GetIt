@@ -20,7 +20,7 @@ Application to send HTTP requests to test your API endpoints.
 
 ![Main window of GetIt](data/screenshot_1.png)
 
-## 3. Features
+## 2. Features
 
 You can send numerous requests to a webserver. You can send RAW post data,
 form post data, add cookies to your request and add headers to your request.
@@ -28,7 +28,7 @@ form post data, add cookies to your request and add headers to your request.
 The goal of GetIt is making testing API's easier using open sources tools. If you're
 missing a feature please do not hesitate to open a pull-request or create an issue.
 
-## 4. Roadmap
+## 3. Roadmap
 
 Unfortunately there are only so many things we can implement in a specific time period, so there will be some
 features that aren't included in GetIt but that we will add in the future.
