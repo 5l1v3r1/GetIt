@@ -1,10 +1,13 @@
 #pragma once
 
+#include <boost/format.hpp>
 #include <cpprest/http_client.h>
 #include <string>
 #include <memory>
 
 #include "domain/Request.hpp"
+
+using namespace web::http;
 
 namespace getit::domain
 {
@@ -12,17 +15,18 @@ namespace getit::domain
     {
         public:
             CppRestRequest(const std::string& method, const std::string& uri);
-            CppRestRequest(const std::string& method, const std::string& uri, const web::http::client::http_client& client);
+            CppRestRequest(const std::string& method, const std::string& uri, const client::http_client& client);
             ~CppRestRequest() override = default;
 
             void send(std::function<void(Response*)> callback) override;
 
         private:
-            web::http::client::http_client client;
+            client::http_client client;
 
-            web::http::http_request buildRequest();
-            void addHeadersToRequest(web::http::http_request* request);
-            void addBodyToRequest(web::http::http_request* request);
-            static Response* buildResponse(web::http::http_response restResponse);
+            http_request buildRequest();
+            void addCookiesToRequest(http_request* request);
+            void addHeadersToRequest(http_request* request);
+            void addBodyToRequest(http_request* request);
+            static Response* buildResponse(http_response restResponse);
     };
 }

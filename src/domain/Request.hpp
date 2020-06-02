@@ -16,6 +16,7 @@ namespace getit::domain
             Request(const std::string&  method, const std::string&  uri);
             virtual ~Request() = default;
 
+            void addCookie(const std::string& cookie, const std::string& value);
             void addHeader(const std::string& header, const std::string& value);
             void setBody(std::shared_ptr<RequestBody> body);
             virtual void send(std::function<void(Response*)> callback) = 0;
@@ -23,6 +24,7 @@ namespace getit::domain
         protected:
             const std::string& method;
             const std::string& uri;
+            std::map<std::string, std::string> cookies;
             std::map<std::string, std::string> headers;
             std::shared_ptr<RequestBody> body;
     };

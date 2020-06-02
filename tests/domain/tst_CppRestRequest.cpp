@@ -112,6 +112,44 @@ TEST_CASE("CppRestRequest")
         sendAndDeleteRequest(request);
     }
 
+    SECTION("send gives the cookies from the setCookies method as a correct header value")
+    {
+        // Arrange
+        const auto& cookieHeaderName = "Cookie";
+        const auto& method = "GET";
+        const auto& firstCookieKey = "Cookie1";
+        const auto& firstCookieValue = "Val1";
+        const auto& secondCookieKey = "Cookie2";
+        const auto& secondCookieValue = "Val2";
+        auto expectedCookieHeaderFormat = boost::format("%1%=%2%; %3%=%4%;")
+                % firstCookieKey % firstCookieValue % secondCookieKey % secondCookieValue;
+        const auto& request = new CppRestRequest(method, uri);
+
+        // Act
+        request->addCookie(firstCookieKey, firstCookieValue);
+        request->addCookie(secondCookieKey, secondCookieValue);
+
+        // Assert
+        listen(requestListener, method, [=](const http_request& request) {
+            REQUIRE_FALSE(request.headers().empty());
+
+           bool foundHeader = false;
+
+           for (const auto& [header, value]: request.headers()) {
+               if (header == cookieHeaderName) {
+                   foundHeader = true;
+
+                   REQUIRE(value == expectedCookieHeaderFormat.str());
+               }
+           }
+
+           REQUIRE(foundHeader);
+        });
+
+        // Send request
+        sendAndDeleteRequest(request);
+    }
+
     // After
     requestListener->close().wait();
 }

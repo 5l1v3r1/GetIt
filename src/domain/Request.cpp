@@ -9,6 +9,11 @@ Request::Request(const std::string&  method, const std::string&  uri):
 
 }
 
+void Request::addCookie(const std::string &cookie, const std::string &value)
+{
+    this->cookies.insert({cookie, value});
+}
+
 void Request::addHeader(const std::string& header, const std::string& value)
 {
     this->headers.insert({header, value});
