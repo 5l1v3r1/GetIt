@@ -19,7 +19,13 @@ CookiesWidget::~CookiesWidget()
 
 void CookiesWidget::addToRequest(std::shared_ptr<domain::Request> request)
 {
+    for(int i = 0; i < ui->treeCookies->topLevelItemCount(); ++i ) {
+        QTreeWidgetItem* item = ui->treeCookies->topLevelItem(i);
+        const auto& cookie = item->text(0).toStdString();
+        const auto& value = item->text(1).toStdString();
 
+        request->addCookie(cookie, value);
+    }
 }
 
 void CookiesWidget::connectSignals()
