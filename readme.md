@@ -14,6 +14,7 @@ Application to send HTTP requests to test your API endpoints.
 - [4. Required packages](#4-required-packages)
 - [5. Build](#5-build)
     - [5.1 Tests](#51-tests)
+        - [5.1.1 Test coverage](#511-test-coverage)
     - [5.2 Application](#52-application)
     
 ## 1. Screenshots
@@ -79,6 +80,18 @@ $ cd build
 $ cmake ..
 $ make getit_tests
 $ ./bin/getit_tests
+```
+
+#### 5.1.1 Test coverage
+
+When building the tests the required compiler flags are set to generate the coverage reports for each individual
+source file. The coverage reports can be bundled using `lcov` which will generate a `*.info` file which can be transformed
+into a `html` file using the `genhtml` command.
+
+```bash
+$ lcov --directory tests/CMakeFiles/getit_tests.dir --capture --output-file getit_coverage.info
+$ genhtml -o coverage/ getit_coverage.info
+$ open coverage/index.html
 ```
 
 ### 5.2 Application

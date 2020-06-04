@@ -7,7 +7,7 @@ Testing/
 *_autogen/
 .idea/
 .vscode/
-CMakeFiles/
+cmake-build-debug/
 CMakeScripts/
 *.xcodeproj
 *.build

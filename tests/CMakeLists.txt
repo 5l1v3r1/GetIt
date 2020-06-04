@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
 
 set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage")
 
 find_package(Boost COMPONENTS thread system chrono REQUIRED)
 
@@ -28,4 +29,5 @@ target_link_libraries(getit_tests Boost::system)
 target_link_libraries(getit_tests cpprest)
 target_link_libraries(getit_tests trompeloeil Catch2::Catch2)
 
-add_test(NAME getit_tests  COMMAND getit_tests)
+enable_testing()
+add_test(NAME getit_tests COMMAND getit_tests)
