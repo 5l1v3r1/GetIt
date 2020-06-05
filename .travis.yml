@@ -40,6 +40,8 @@ jobs:
         - cmake ..
         - make getit_tests
         - ./bin/getit_tests
+      after_success:
+        - bash <(curl -s https://codecov.io/bash)
 
     - stage: test
       os: linux
